@@ -1,41 +1,40 @@
 import { AdminModel } from '../db/schemas';
 
-async function GetUsers(params:type) {
-    
+async function GetUsers() {
+    const mongooseQuery = await AdminModel.find({userlevel: 2});
+    return mongooseQuery;
 }
 
-async function CreateUser(array) {
-    let queryCapper;
-    let newCapper = new AdminModel({
-        username:  array.username,
-        password: array.password,
-        userlevel: 2,
-        capperName: array.capperName,
-        capperRank: array.capperRank,
-        imageLink: array.imageLink,
-        capperDescription: array.capperDescription,
-
+async function CreateUser(user: any) {
+    let mongooseQuery;
+    let newUser = new AdminModel({
+        username:  user.username,
+        password: user.username,
+        userlevel: user.userlevel,
+        contact: user.contact,
+        сounty: user.сounty,
     });
-    newCapper.save(function (err, result) {
+    newUser.save(function (err, result) {
         if (err) return console.error(err);
-        queryCapper = result;
+        mongooseQuery = result;
     });
-    return queryCapper;
+    return mongooseQuery;
 }
 
-async function UpdateUser(id, array){
-    let queryCapper = await AdminModel.findOneAndUpdate({public: true, userlevel: 2, _id: id}, {
-        capperName: array.capperName,
-        capperRang: array.capperRang,
-        capperDescription: array.capperDescription,
-        imageLink: array.imageLink,
+async function UpdateUser(userId: string, user: any){
+    let mongooseQuery = await AdminModel.findOneAndUpdate({userlevel: 2, _id: userId}, {
+        username:  user.username,
+        password: user.username,
+        userlevel: user.userlevel,
+        contact: user.contact,
+        сounty: user.сounty,
     });
-    return queryCapper;
+    return mongooseQuery;
 }
 
-async function DeleteUser(id){
-    let queryCapper = await AdminModel.findOneAndDelete({public: true, userlevel: 2, _id: id});
-    return queryCapper;
+async function DeleteUser(userId: string){
+    let mongooseQuery = await AdminModel.findOneAndDelete({userlevel: 2, _id: userId});
+    return mongooseQuery;
 }
 
 export = {
