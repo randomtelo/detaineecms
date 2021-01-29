@@ -1,4 +1,4 @@
-import { DetaineeModel } from '../db/dbSchemas';
+import { DetaineeModel } from '../db/schemas';
 
 async function GetDetainees() {
     let mongooseQuery = await DetaineeModel.find();
