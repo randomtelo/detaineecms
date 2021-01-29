@@ -1,4 +1,4 @@
-import { AdminModel } from '../db/dbSchemas';
+import { AdminModel } from '../db/schemas';
 
 async function GetUsers(params:type) {
     

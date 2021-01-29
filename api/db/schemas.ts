@@ -23,7 +23,7 @@ const institutionSchema = new Schema({
     titleShort: String,
     titleLong: String,
     district: String, //Особые пожелания
-    adress: String,
+    address: String,
     contact: String,
     siteJ: String, // Сайт какого то Жени
     site: String, // Официальный сайт

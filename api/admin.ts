@@ -5,7 +5,7 @@ import passport from'koa-passport';
 import * as jwt from'jsonwebtoken';
 import * as passportLocal from 'passport-local';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import { AdminModel } from './db/dbSchemas';
+import { AdminModel } from './db/schemas';
 const jwtsecret = ''; // signing key for JWT
 const LocalStrategy = passportLocal.Strategy;
 const router = new Router();
