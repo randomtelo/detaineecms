@@ -1,4 +1,7 @@
+/web-ui/node_modules/*
+/web-ui/public/*
+/web-ui/package-lock.json
+/web-ui/package-lock.json
 /node_modules/*
 /public/*
 package-lock.json
-package.json
