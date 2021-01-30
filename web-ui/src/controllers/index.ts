@@ -1,7 +1,7 @@
 import authController from './autorization';
-import forecastController from './forecast';
+import institutionController from './institution';
 
 export default {
-    forecastController,
+    institutionController,
     authController,
 }

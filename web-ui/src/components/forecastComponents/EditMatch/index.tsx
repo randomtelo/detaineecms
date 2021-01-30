@@ -1,9 +1,6 @@
 import React from 'react';
-import { observer, inject } from "mobx-react";
-import { ServerLink } from './../../../config/';
+import { server } from './../../../config/';
 
-@inject("Store")
-@observer
 class EditMatch extends React.Component<any, any> {
     constructor(props){
         super(props);
@@ -27,7 +24,7 @@ class EditMatch extends React.Component<any, any> {
     }
 
     componentDidMount(){
-        fetch(ServerLink + '/getmatch/' + this.props.id, {
+        fetch(server.host + '/getmatch/' + this.props.id, {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -95,7 +92,7 @@ class EditMatch extends React.Component<any, any> {
         
 
         
-        fetch(ServerLink + '/editmatch/' + this.props.id, {
+        fetch(server.host + '/editmatch/' + this.props.id, {
             method: 'POST',
             mode: 'cors',
             headers: {

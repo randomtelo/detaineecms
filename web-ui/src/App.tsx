@@ -8,12 +8,10 @@ import Controllers from './controllers/';
 import HeaderComponent from './components/headerComponent';
 import { MenuComponent } from './components/menuComponent';
 import { UserComponent } from './components/userComponent/';
-import { VersionsComponent } from './components/versionComponent/';
-import ChatComponent from './components/chatComponent/';
 import { ErrorPage } from './components/errorComponent/';
 import { AuthorizationComponent } from './components/authComponent/';
 import { FooterComponent } from './components/footerComponent';
-import { ForecastComponent } from './components/forecastComponents/';
+import { InstitutionComponent } from './components/institutionComponents/';
 
 
 function PrivateRoute({ children, ...rest }) {
@@ -61,12 +59,7 @@ function MainComponent() {
 
               <PrivateRoute path="/forecast">
                 <HeaderComponent />
-                <ForecastComponent Store={ UserCredentials } />
-              </PrivateRoute>
-
-              <PrivateRoute path="/chat">
-                <HeaderComponent />
-                <ChatComponent />
+                <InstitutionComponent Store={ UserCredentials } />
               </PrivateRoute>
 
               <PrivateRoute path="/usermanager">
@@ -76,11 +69,6 @@ function MainComponent() {
 
               <PrivateRoute path="/settings">
                 <HeaderComponent />
-              </PrivateRoute>
-
-              <PrivateRoute path="/versions">
-                <HeaderComponent />
-                <VersionsComponent Store={ UserCredentials } />
               </PrivateRoute>
 
               <PrivateRoute path="/exit">

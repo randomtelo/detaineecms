@@ -1,10 +1,9 @@
 import { server } from '../config';
 import { User } from '../Models/user';
-import { Version } from '../Models/version';
 
 export namespace API {
     export namespace Autorization {
-        export function Login(username: string, password: string) {
+        export async function Login(username: string, password: string) {
             return fetch(server.host + '/login/', {
                 method: 'POST',
                 mode: 'cors',
@@ -72,7 +71,7 @@ export namespace API {
         export const userCreate = () => {
             
         };
-        export const userrUpdate = () => {
+        export const userUpdate = () => {
             
         };
         export const userDelete = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ServerLink } from './../../../config/';
+import { server } from './../../../config/';
 
 import { CalendarSwitch } from './../utilsComponents/CalendarSwitch'
 import { LockSwitch } from './../utilsComponents/LockSwitch';
@@ -10,7 +10,7 @@ import NewMatch from './../newMatch/';
 
 
 export class MapForecasts extends React.Component<any, any> {
-    constructor(props){
+    constructor(props: any){
         super(props);
         this.state = {
             ViewNewMatch: true,

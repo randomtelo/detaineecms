@@ -1,11 +1,8 @@
 import React from 'react';
-import {observer, inject} from "mobx-react";
-import { ServerLink } from './../../../config/';
+import { server } from './../../../config/';
 
-@inject("Store")
-@observer
 class NewForecast extends React.Component<any, any> {
-    constructor(props){
+    constructor(props: any){
         super(props);
 
         this.state = {
@@ -28,7 +25,7 @@ class NewForecast extends React.Component<any, any> {
     }
 
     componentDidMount() {
-        let response = fetch(ServerLink + '/capper/getall/', {
+        let response = fetch(server.host + '/capper/getall/', {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -81,7 +78,7 @@ class NewForecast extends React.Component<any, any> {
             daySwitch: false,
             type: this.state.type,
         };
-        let response = fetch(ServerLink + '/addforecast/', {
+        let response = fetch(server.host + '/addforecast/', {
             method: 'POST',
             mode: 'cors',
             headers: {

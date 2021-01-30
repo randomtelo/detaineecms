@@ -6,9 +6,13 @@ import * as jwt from'jsonwebtoken';
 import * as passportLocal from 'passport-local';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { AdminModel } from './db/schemas';
-const jwtsecret = ''; // signing key for JWT
+
+const salt = process.env.SALT as unknown as string;
+const jwtsecret = salt; // signing key for JWT
+
 const LocalStrategy = passportLocal.Strategy;
 const router = new Router();
+
 
 router.get('*', function(ctx) {
   ctx.body = fs.readFileSync(path.resolve(path.join('public', 'index.html')), 'utf8')
@@ -39,7 +43,8 @@ passport.use(new LocalStrategy({
   session: false
 },
 function (username, password, done) {
-  AdminModel.findOne({username: username}, (err, user) => {
+  AdminModel.findOne({ username: username }, (err, user) => {
+    console.log('findOne: ', user);
     if (err) {
       return done(err);
     }
@@ -54,6 +59,7 @@ function (username, password, done) {
 
 // local auth route. Creates JWT is successful
 router.post('/login', async(ctx, next) => {
+  console.log(ctx.request.body);
   await passport.authenticate('local', function (err, user) {
     if (user == false) {
       ctx.body = '{"answer": "Login failed"}';

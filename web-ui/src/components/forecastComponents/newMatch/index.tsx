@@ -1,11 +1,8 @@
 import React from 'react';
-import { observer, inject } from "mobx-react";
-import { ServerLink } from './../../../config/';
+import { server} from './../../../config/';
 
-@inject("Store")
-@observer
 class NewMatch extends React.Component<any, any> {
-    constructor(props){
+    constructor(props: any){
         super(props);
         this.state = {
             tournament: '',
@@ -46,7 +43,7 @@ class NewMatch extends React.Component<any, any> {
             sport: this.state.sport,
             market: this.state.market,
         };
-        let response = fetch(ServerLink + '/addmatch/' + this.props.id, {
+        let response = fetch(server.host + '/addmatch/' + this.props.id, {
             method: 'POST',
             mode: 'cors',
             headers: {

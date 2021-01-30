@@ -1,10 +1,7 @@
 import React from 'react';
-import {observer, inject} from "mobx-react";
 
-@inject("Store")
-@observer
 class EditCapper extends React.Component<any, any> {
-    constructor(props) {
+    constructor(props: any) {
         super(props);
         this.SubmitHandler = this.SubmitHandler.bind(this);
     }

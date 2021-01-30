@@ -1,9 +1,9 @@
 import React from 'react';
+import { server } from '../../../config';
 import EditMatch from './../EditMatch/';
-import { ServerLink } from './../../../config/';
 
 export class MapMatch extends React.Component<any, any> {
-    constructor(props){
+    constructor(props: any){
         super(props);
         this.state = {
             editmatch: false,
@@ -34,7 +34,7 @@ export class MapMatch extends React.Component<any, any> {
     }
 
     RefreshMatches(){
-        fetch(ServerLink + '/getmatches/' + this.props.matchid, {
+        fetch(server.host + '/getmatches/' + this.props.matchid, {
             method: 'POST',
             mode: 'cors',
             cache: 'reload',
@@ -54,7 +54,7 @@ export class MapMatch extends React.Component<any, any> {
     }
 
     SendDelete(id){
-        fetch(ServerLink + '/deletematch/' + id, {
+        fetch(server.host + '/deletematch/' + id, {
             method: 'POST',
             mode: 'cors',
             headers: {

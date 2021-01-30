@@ -1,11 +1,8 @@
 import React from 'react';
-import {observer, inject} from "mobx-react";
-import { ServerLink } from './../../../config/';
+import { server } from './../../../config/';
 
-@inject("Store")
-@observer
 class addNewCapper extends React.Component<any, any> {
-    constructor(props){
+    constructor(props: any){
         super(props);
         this.state ={
             username:  '',
@@ -36,7 +33,7 @@ class addNewCapper extends React.Component<any, any> {
             imageLink: this.state.imageLink,
             capperDescription: this.state.capperDescription,
         };
-        fetch(ServerLink + '/capper/add/', {
+        fetch(server.host + '/capper/add/', {
             method: 'POST',
             mode: 'cors',
             headers: {
