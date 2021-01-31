@@ -1,5 +1,7 @@
 import { server } from '../config';
 import { User } from '../models/user';
+import Institution from '../models/institution';
+import Detainee from '../models/detainee';
 
 export namespace API {
     export namespace Autorization {
@@ -33,49 +35,147 @@ export namespace API {
         }
     }
 
+    export namespace Institution {
+        export async function institutionsGet(jwt: string): Promise<Institution[]> {
+            return fetch(server.host + '/institution/get/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+            })
+            .then(response => response.json() as Promise<any>)
+            .then(institution => {
+                return institution as unknown as Institution[];
+            });
+        };
+        
+        export async function institutionCreate(jwt: string, institution: Institution) {
+            return fetch(server.host + '/institution/create/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+                body: JSON.stringify(institution)
+            });
+        };
+        
+        export async function institutionUpdate(jwt: string, institutionId: string, institution: Institution) {
+            fetch(server.host + `/institution/update/${ institutionId }/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+                body: JSON.stringify(institution)
+            });
+        };
+        
+        export async function institutionDelete(jwt: string, institutionId: string) {
+            fetch(server.host + `/institution/delete/${ institutionId }/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+            })
+        };
+    }
+
     export namespace Detainee {
-        export const institutionsGet = () => {
-
+        export async function detaineeGet(jwt: string): Promise<Detainee[]> {
+            return fetch(server.host + '/detainee/get/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+            })
+            .then(response => response.json() as Promise<any>)
+            .then(institution => {
+                return institution as unknown as Detainee[];
+            });
         };
-
-        export const institutionCreate = () => {
-            
+        
+        export async function detaineeCreate(jwt: string, detainee: Detainee) {
+            return fetch(server.host + '/detainee/create/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+                body: JSON.stringify(detainee)
+            });
         };
-
-        export const institutionUpdate = () => {
-            
+        
+        export async function detaineeUpdate(jwt: string, detaineeId: string, detainee: Detainee) {
+            fetch(server.host + `/detainee/update/${ detaineeId }/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+                body: JSON.stringify(detainee)
+            });
         };
-
-        export const institutionDelete = () => {
-
-        };
-
-        export const detaineeGet = () => {
-            
-        };
-        export const detaineeCreate = () => {
-            
-        };
-        export const detaineeUpdate = () => {
-            
-        };
-        export const detaineeDelete = () => {
-            
+        
+        export async function detaineeDelete(jwt: string, detaineeId: string) {
+            fetch(server.host + `/detainee/delete/${ detaineeId }/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+            })
         };
     }
 
     export namespace User {
-        export const userGet = () => {
-            
+        export async function usersGet(jwt: string): Promise<User[]> {
+            return fetch(server.host + '/user/get/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+            })
+            .then(response => response.json() as Promise<any>)
+            .then(institution => {
+                return institution as unknown as User[];
+            });
         };
-        export const userCreate = () => {
-            
+        
+        export async function userCreate(jwt: string, user: User) {
+            return fetch(server.host + '/user/create/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+                body: JSON.stringify(user)
+            });
         };
-        export const userUpdate = () => {
-            
+        
+        export async function userUpdate(jwt: string, userId: string, user: User) {
+            fetch(server.host + `/user/update/${ userId }/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+                body: JSON.stringify(user)
+            });
         };
-        export const userDelete = () => {
-            
+        
+        export async function userDelete(jwt: string, userId: string) {
+            fetch(server.host + `/user/delete/${ userId }/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+            })
         };
     }
 }
