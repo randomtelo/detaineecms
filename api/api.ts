@@ -20,8 +20,8 @@ router.post('/detainee/update/:id/', passport.authenticate('jwt', { session: fal
 router.post('/detainee/delete/:id/', passport.authenticate('jwt', { session: false }), personController.deleteDetainee);
 
 // CMS Users
+router.post('/getuser/', userController.getUser); //
 router.post('/user/get/', passport.authenticate('jwt', { session: false }), userController.getUsers);
-router.post('/getuser/', passport.authenticate('jwt', { session: false }), userController.getUser);
 router.post('/user/create/:id/', passport.authenticate('jwt', { session: false }), userController.createUser);
 router.post('/user/update/:id/', passport.authenticate('jwt', { session: false }), userController.updateUser);
 router.post('/user/delete/:id/', passport.authenticate('jwt', { session: false }), userController.deleteUser);

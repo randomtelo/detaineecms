@@ -7,14 +7,14 @@ import Controllers from './controllers/';
 
 import HeaderComponent from './components/headerComponent';
 import { MenuComponent } from './components/menuComponent';
-import { UserComponent } from './components/userComponent/';
+import UserComponent from './components/userComponent/';
 import { ErrorPage } from './components/errorComponent/';
 import { AuthorizationComponent } from './components/authComponent/';
 import { FooterComponent } from './components/footerComponent';
-import { InstitutionComponent } from './components/institutionComponents/';
+import InstitutionComponent from './components/institutionComponent/';
 
 
-function PrivateRoute({ children, ...rest }) {
+function PrivateRoute({ children, ...rest }: any) {
   const UserCredentials = useStore(Store.userCredentials.store);
   return (
     <Route
@@ -57,9 +57,9 @@ function MainComponent() {
                 <MenuComponent />
               </PrivateRoute>
 
-              <PrivateRoute path="/forecast">
+              <PrivateRoute path="/prisoners">
                 <HeaderComponent />
-                <InstitutionComponent Store={ UserCredentials } />
+                <InstitutionComponent userCredentials={ UserCredentials } />
               </PrivateRoute>
 
               <PrivateRoute path="/usermanager">

@@ -16,13 +16,13 @@ class addNewCapper extends React.Component<any, any> {
         this.SubmitHandler = this.SubmitHandler.bind(this);
     }
 
-    InputHandler(e){
+    InputHandler(e: React.ChangeEvent<HTMLInputElement>){
         this.setState({
             [e.target.name]: e.target.value,
         });
     }
 
-    SubmitHandler(e){
+    SubmitHandler(e: React.SyntheticEvent){
         e.preventDefault();
 
         let newCapper = {
@@ -95,10 +95,6 @@ class addNewCapper extends React.Component<any, any> {
                                 <option value="22">22. ЭКСПЕРТ В ЭКСПРЕССАХ</option>
                             </select>
                             <small className="form-text text-muted"> Public rank capper. Displayed in profile.</small>
-                        </div>
-                        <div className="form-group">
-                            <label>Public description</label>
-                            <textarea className="form-control" name="capperDescription" cols={ 3 } onChange={this.InputHandler} required />
                         </div>
                         <button className="btn btn-primary mr-2" type="submit">Create</button>
                         <button className="btn btn-primary" onClick={this.props.switch}>Close</button>

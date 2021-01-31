@@ -3,7 +3,7 @@ import Controllers from './../controllers';
 import {
     User,
     UserCredentials,
-} from '../Models/user';
+} from '../models/user';
 
 
 const initUserCredential: User | null = null;
@@ -15,7 +15,11 @@ export const token = createStore(initJwtToken as string | null);
 export const userCredentialsChange  = createEvent<User | null>();
 export const tokenStoreChange  = createEvent<string | null>();
 
-userCredential.on(userCredentialsChange, (_, user) => user);
+userCredential.on(userCredentialsChange, (_a, user) => {
+    console.log('_a:', _a);
+    console.log('user:', user);
+    return user;
+});
 token.on(tokenStoreChange, (_, id) => id);
 
 userCredential.watch(value => {
@@ -29,7 +33,7 @@ token.watch(jwt => {
     }
 })
 
-const UserCredentials = combine(userCredential, token, (userCredentialStore, tokenStore) => {
+const userCredentialsCombine = combine(userCredential, token, (userCredentialStore, tokenStore) => {
     return {
         jwt: tokenStore,
         user: userCredentialStore,
@@ -37,7 +41,7 @@ const UserCredentials = combine(userCredential, token, (userCredentialStore, tok
 })
 
 export default {
-    store: UserCredentials,
+    store: userCredentialsCombine,
     setToken: tokenStoreChange,
     setStore: userCredentialsChange,
 }

@@ -10,7 +10,7 @@ const HeaderComponent = () => (
             <Link to="/exit">Exit</Link>
         </div>
         <div>
-            <Link to="https://teleg.run/sidirovich">Support</Link>
+            <Link to="https://teleg.run/soothex">Support</Link>
         </div>
     </div>
 );

@@ -1,12 +1,10 @@
 import React from 'react';
-import { observer } from 'mobx-react';
-import { ServerLink } from './../../config/';
 
 import AddNewCapper from './components/addPopUp';
 import EditCapper from './components/editForm';
 
-class CapperListGenerator extends React.Component<any, any> {
-  constructor(props){
+class MapUserComponent extends React.Component<any, any> {
+  constructor(props: any){
     super(props);
     this.state = {
       openForm: false,
@@ -15,7 +13,7 @@ class CapperListGenerator extends React.Component<any, any> {
     this.OpenEditForm = this.OpenEditForm.bind(this);
   }
 
-  OpenEditForm(index) {
+  OpenEditForm(index: any) {
     if (this.state.OpenForm && !index) {
       this.setState({ openForm: false });
     } else {
@@ -30,7 +28,7 @@ class CapperListGenerator extends React.Component<any, any> {
     return (
       <div className="col-12">
         <div className="list-group">
-          {this.props.Elements.map((element, index) => (
+          {this.props.Elements.map((element: any, index: number) => (
             <div className="list-group-item" key={index}>
               <div className="row">
                   <div className="col-12">
@@ -67,7 +65,7 @@ class CapperListGenerator extends React.Component<any, any> {
 }
 
 export class UserComponent extends React.Component<any, any> {
-    constructor(props) {
+    constructor(props: any) {
       super(props);
       this.state = {
         elements: [],
@@ -78,8 +76,7 @@ export class UserComponent extends React.Component<any, any> {
       this.CreateForm = this.CreateForm.bind(this);
     }
   
-    componentDidMount(){
-      this.RefreshAPI();
+    componentDidMount() {
     }
 
     CreateForm(){
@@ -89,24 +86,6 @@ export class UserComponent extends React.Component<any, any> {
       else{
         this.setState({openCreateForm: true});
       }
-    }
-
-    RefreshAPI(){
-      let response = fetch(ServerLink + '/capper/getall/', {
-        method: 'POST',
-        mode: 'cors',
-        headers: {
-            'content-type': 'application/json',
-            'Authorization': 'Bearer ' + this.props.Store.jwt.split(' ')[1],
-        },
-        body: JSON.stringify(this.state)
-      }).then(response => {
-        response.json().then( data => {
-            this.setState({
-                elements: data,
-            });
-        });
-      });
     }
   
     render(){
@@ -129,8 +108,8 @@ export class UserComponent extends React.Component<any, any> {
                   </div>
                   <div className="col-12">
                   </div>
-                  <CapperListGenerator 
-                    Elements = {this.state.elements}
+                  <MapUserComponent 
+                    Elements= {this.state.elements}
                   />
                   </div>
                 </div>
@@ -139,4 +118,6 @@ export class UserComponent extends React.Component<any, any> {
         </React.Fragment>
       );
     }
-  }
+}
+
+export default UserComponent;

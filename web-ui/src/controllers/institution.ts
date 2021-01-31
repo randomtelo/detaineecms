@@ -1,5 +1,5 @@
 import { API } from '../api/index';
-import Institution from '../Models/institution';
+import Institution from '../models/institution';
 
 const getInstitutions = (jwt: string): Institution[] => {
     return [];

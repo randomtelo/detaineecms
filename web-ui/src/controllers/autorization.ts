@@ -1,6 +1,6 @@
 import { API } from '../api/index';
 import Store from '../effectorStore';
-import { User } from '../Models/user';
+import { User } from '../models/user';
 
 
 function getLocalStorageJWT() {
@@ -38,11 +38,11 @@ function updateAuth(jwt: string) {
             capperDescription: response.capperDescription,
             capperName: response.capperName,
             capperRank: response.capperRank,
-            id: response.id,
+            id: response.user._id,
             imageLink: response.imageLink,
             password: response.password,
-            userlevel: response.userlevel,
-            username: response.username,
+            userlevel: response.user.userlevel,
+            username: response.user.username,
         } as unknown as User);
     })
     .catch((error) => {

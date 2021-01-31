@@ -1,6 +1,5 @@
 /web-ui/node_modules/*
 /web-ui/build/*
-/web-ui/public/*
 /web-ui/.eslintcache
 /web-ui/package-lock.json
 

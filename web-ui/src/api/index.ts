@@ -1,5 +1,5 @@
 import { server } from '../config';
-import { User } from '../Models/user';
+import { User } from '../models/user';
 
 export namespace API {
     export namespace Autorization {

@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 
-import Institution from '../../Models/institution';
-import { UserCredentials } from '../../Models/user';
+import Institution from '../../models/institution';
+import { UserCredentials } from '../../models/user';
+
+import NewDetainee from './newDetainee';
+import Detainee from './mapDetainees';
+import UpdateInstitution from './updateInstitution';
 
 interface Props {
     userCredentials: UserCredentials;
@@ -13,6 +17,9 @@ interface Props {
 function MapInstitutionComponent(props: Props) {
     const [ selectNewDetainee, setSelectNewDetainee ] = useState<number | undefined>(undefined);
     const [ selectUpdateInstution, setSelectUpdateInstution ] = useState<number | undefined>(undefined);
+
+    const handleChangeDetainee = (select: number | undefined) => setSelectNewDetainee(select);
+    const handleUpdateInstution = (select: number | undefined) => setSelectUpdateInstution(select);
 
     return (
         <React.Fragment>
@@ -68,13 +75,13 @@ function MapInstitutionComponent(props: Props) {
                                         userCredentials={ props.userCredentials}
                                         instutionId={ institution.id }
                                         view={ index === selectUpdateInstution ? true : false }
-                                        setSelectUpdateInstution={ setSelectUpdateInstution }
+                                        handleUpdateInstution={ handleUpdateInstution }
                                     />
                                     <NewDetainee
                                         index={ index }
                                         view={index === selectNewDetainee ? true : false}
                                         instutionId={ institution.id }
-                                        setSelectNewDetainee={ setSelectNewDetainee }
+                                        handleChangeDetainee={ handleChangeDetainee }
                                     />
                                 </div>
                                 <div className="col-12">

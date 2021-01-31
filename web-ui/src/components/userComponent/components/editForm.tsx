@@ -6,7 +6,7 @@ class EditCapper extends React.Component<any, any> {
         this.SubmitHandler = this.SubmitHandler.bind(this);
     }
 
-    SubmitHandler(e){
+    SubmitHandler(e: React.SyntheticEvent){
         e.preventDefault();
         alert('Данный функционал временно не работает');
     }
@@ -44,10 +44,6 @@ class EditCapper extends React.Component<any, any> {
                             <option value="21">21. ЭКСПЕРТ В ОРДИНАРАХ</option>
                             <option value="22">22. ЭКСПЕРТ В ЭКСПРЕССАХ</option>
                     </select>
-                </div>
-                <div className="form-group">
-                    <label>Public description</label>
-                    <textarea className="form-control" name="capperDescription" cols={ 3 } placeholder={ this.props.capper.capperDescription } />
                 </div>
                 <button className="btn btn-primary mr-2" type="submit">Update</button>
                 <button className="btn btn-primary" onClick={ this.props.switch }>Close</button>

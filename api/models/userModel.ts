@@ -1,5 +1,11 @@
 import { AdminModel } from '../db/schemas';
 
+async function GetUserPanel(id){
+    let queryCapper = await AdminModel.findOne({_id: id}).select('-password');
+    console.log('queryCapper: ', queryCapper);
+    return queryCapper;
+}
+
 async function GetUsers() {
     const mongooseQuery = await AdminModel.find({userlevel: 2});
     return mongooseQuery;
@@ -38,6 +44,7 @@ async function DeleteUser(userId: string){
 }
 
 export = {
+    GetUserPanel,
     GetUsers,
     CreateUser,
     UpdateUser,

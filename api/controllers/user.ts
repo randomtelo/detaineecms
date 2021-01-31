@@ -1,11 +1,13 @@
 const UserModel = require('./../models/userModel');
-
-const jwtsecret = "USyEcT7tjB1qIWaTgBjv"; // signing key for JWT
+const salt: string = process.env.SALT as unknown as string;
 const jwt = require('jsonwebtoken'); // auth via JWT for hhtp
 
 function CheckToken(token){
-  let j = jwt.verify(token, jwtsecret , (err, decoded) => {
-    if (err) return false;
+  let j = jwt.verify(token, salt , (err, decoded) => {
+    if (err) {
+      console.log('CheckToken -> error: ', err);
+      return false;
+    }
     else return decoded;
   });
   return j;
@@ -14,6 +16,7 @@ function CheckToken(token){
 async function getUser(ctx){
   try {
     let date = CheckToken(ctx.request.header.authorization.split(' ')[1]);
+    console.log('date: ', date);
     await UserModel.GetUserPanel(date.id).then((query) => {
       ctx.body = JSON.stringify(query);
     });

@@ -3,7 +3,7 @@ export default interface Institution {
     сounty: string, // Округ
     titleShort: string,
     titleLong: string,
-    district: string, //Особые пожелания
+    district: string, 
     address: string,
     contact: string,
     siteJ: string, // Сайт какого то Жени
