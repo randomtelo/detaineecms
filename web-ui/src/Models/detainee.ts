@@ -1,9 +1,10 @@
 export default interface Detainee {
+    _id: string,
     сounty: string,
     institution: string,
     fio: string,
     dateDetention: string,
-    personsNearby: string,
+    personsNearby: number,
     contact: string,
     specific: string, //Особые пожелания
     comment: string, //Комментарий

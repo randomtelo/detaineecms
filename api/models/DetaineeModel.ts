@@ -5,18 +5,24 @@ async function GetDetainees() {
     return mongooseQuery;
 }
 
+async function GetDetaineesByInstitution(institutionId: string) {
+    let mongooseQuery = await DetaineeModel.find({ observedInstitution: institutionId });
+    return mongooseQuery;
+}
+
 async function CreateDetainee(detainee) {
-    let newForecast = new DetaineeModel.create({
-        сounty: detainee.сounty,
-        institution: detainee.institution,
-        fio: detainee.fio,
-        dateDetention: detainee.dateDetention,
-        personsNearby: detainee.personsNearby,
-        contact: detainee.contact,
-        specific: detainee.specific, //Особые пожелания
-        comment: detainee.comment, //Комментарий
-        courier: detainee.courier, //Кто везёт передачу
-        article: detainee.article,
+    console.log('CreateDetainee: ', detainee);
+    let newDetainee = DetaineeModel.create({
+        сounty: detainee.сounty ? detainee.сounty : null,
+        observedInstitution: detainee.institution ? detainee.institution : null,
+        fio: detainee.fio ? detainee.fio : null,
+        dateDetention: detainee.dateDetention ? detainee.dateDetention : null,
+        personsNearby: detainee.personsNearby ? detainee.personsNearby : null,
+        contact: detainee.contact ? detainee.contact : null,
+        specific: detainee.specific ? detainee.specific : null, //Особые пожелания
+        comment: detainee.comment ? detainee.comment : null, //Комментарий
+        courier: detainee.courier ? detainee.courier : null, //Кто везёт передачу
+        article: detainee.article ? detainee.article : null,
     });
 }
 
@@ -33,6 +39,7 @@ async function DeleteDetainee(detaineeId) {
 
 export = {
     GetDetainees,
+    GetDetaineesByInstitution,
     CreateDetainee,
     UpdateDetainee,
     DeleteDetainee,

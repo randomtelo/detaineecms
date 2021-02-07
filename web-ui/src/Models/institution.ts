@@ -1,6 +1,9 @@
 export default interface Institution {
-    id: string,
-    сounty: string, // Округ
+    _id: string,
+    сounty: {
+        _id: string,
+        title: string,
+    }, // Округ
     titleShort: string,
     titleLong: string,
     district: string, 

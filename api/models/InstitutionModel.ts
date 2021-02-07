@@ -1,8 +1,47 @@
-import { InstitutionModel } from '../db/schemas';
+import {
+    CountyModel,
+    InstitutionModel,
+    ObservedInstitutionModel,
+} from '../db/schemas';
 
 async function GetInstitutions() {
     let mongooseQuery = await InstitutionModel.find();
     return mongooseQuery;
+}
+
+async function GetCountys() {
+    let mongooseQuery = await CountyModel.find();
+    return mongooseQuery;
+}
+
+async function GetInstitutionsByCounty(countyId: string) {
+    let mongooseQuery = await InstitutionModel.find({ сounty: countyId });
+    return mongooseQuery;
+}
+
+async function GetObservedInstitution(user: string) {
+    const mongooseQuery = await ObservedInstitutionModel.find({ observerUser: user }).then( async (observedInstitution) => {
+        const institution = observedInstitution.map( async (item) => {
+            return await InstitutionModel.findById(item.observedInstitution);
+        })
+        const institutions = await Promise.all(institution);
+        const institutionAndCounty =  institutions.map( async (item: any) => {
+            const countyTitle = await CountyModel.findById(item.сounty);
+            item.сounty = countyTitle;
+            return item;
+        })
+        return await Promise.all(institutionAndCounty);
+    });
+
+    return mongooseQuery;
+}
+
+async function CreateObservedInstitution(user: string, observedInstitution: any) {
+    ObservedInstitutionModel.create({
+        observerUser: user,
+        сounty: observedInstitution.сounty,
+        observedInstitution: observedInstitution.observedInstitution,
+    });
 }
 
 async function CreateInstitution(institution: any) {
@@ -46,8 +85,12 @@ async function DeleteInstitution(institutionId: string) {
 }
 
 export = {
+    GetCountys,
     GetInstitutions,
+    GetInstitutionsByCounty,
     CreateInstitution,
+    GetObservedInstitution,
+    CreateObservedInstitution,
     UpdateInstitution,
     DeleteInstitution,
 }

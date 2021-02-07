@@ -21,6 +21,8 @@
     "@types/koa-redis": "^4.0.0",
     "@types/koa-session": "^5.10.3",
     "@types/koa-static": "^4.0.1",
+    "@types/lodash": "^4.14.168",
+    "@types/lowdb": "^1.0.9",
     "@types/mongoose": "^5.10.3",
     "@types/passport-jwt": "^3.0.3",
     "@types/passport-local": "^1.0.33",

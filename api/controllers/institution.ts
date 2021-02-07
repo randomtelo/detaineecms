@@ -1,18 +1,40 @@
 import InstitutionModel from '../models/InstitutionModel';
 
+async function getCountys(ctx: any) {
+    const query =  await InstitutionModel.GetCountys().then( data => { return JSON.stringify(data) }, error => {
+        console.log('Err: ' + error);
+    });
+    ctx.body = query;
+}
+
 async function getInstitutions(ctx: any) {
     const query =  await InstitutionModel.GetInstitutions().then( data => { return JSON.stringify(data) }, error => {
         console.log('Err: ' + error);
     });
-    ctx.body = '{"array":' + query + '}';
+    ctx.body = query;
 }
 
-async function createInstitution(ctx: any) {
-    
-    const query =  await InstitutionModel.CreateInstitution(ctx.request.body).then( data => { return JSON.stringify(data) }, error => {
+
+async function getInstitutionsByCounty(ctx: any) {
+    const query =  await InstitutionModel.GetInstitutionsByCounty(ctx.params.id).then( data => { return JSON.stringify(data) }, error => {
         console.log('Err: ' + error);
     });
-    ctx.body = '{"array":' + query + '}';
+    ctx.body = query;
+}
+
+async function getObservedInstitution(ctx: any) {
+    const query =  await InstitutionModel.GetObservedInstitution(ctx.req.user._id).then(data => { return JSON.stringify(data) }, error => {
+        console.log('Err: ' + error);
+    });
+    ctx.body = query;
+}
+
+
+async function createObservedInstitution(ctx: any) {
+    const query =  await InstitutionModel.CreateObservedInstitution(ctx.req.user._id, ctx.request.body).then( data => { return JSON.stringify(data) }, error => {
+        console.log('Err: ' + error);
+    });
+    ctx.body = query;
 }
 
 async function updateInstitution(ctx: any) {
@@ -30,8 +52,11 @@ async function deleteInstitution(ctx: any) {
 }
 
 export = {
+    getCountys,
     getInstitutions,
-    createInstitution,
+    getInstitutionsByCounty,
+    getObservedInstitution,
+    createObservedInstitution,
     updateInstitution,
     deleteInstitution,
 }

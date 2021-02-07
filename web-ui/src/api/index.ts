@@ -1,7 +1,10 @@
 import { server } from '../config';
 import { User } from '../models/user';
+import County from '../models/сounty';
 import Institution from '../models/institution';
+import ObservedInstitution from '../models/observedInstitution';
 import Detainee from '../models/detainee';
+
 
 export namespace API {
     export namespace Autorization {
@@ -35,7 +38,38 @@ export namespace API {
         }
     }
 
+
+    export namespace County {
+        export async function сountyGet(jwt: string): Promise<County[]> {
+            return fetch(server.host + '/county/get/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+            })
+            .then(response => response.json() as Promise<any>)
+            .then(institution => {
+                return institution as unknown as County[];
+            });
+        };
+    }
+
     export namespace Institution {
+        export async function getInstitutionsByCounty(jwt: string, countyId: string) {
+            return fetch(server.host + `/institution/getbycounty/${ countyId }`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+            })
+            .then(response => response.json() as Promise<any>)
+            .then(institution => {
+                return institution as unknown as Institution[];
+            });
+        }
+
         export async function institutionsGet(jwt: string): Promise<Institution[]> {
             return fetch(server.host + '/institution/get/', {
                 method: 'POST',
@@ -50,14 +84,28 @@ export namespace API {
             });
         };
         
-        export async function institutionCreate(jwt: string, institution: Institution) {
-            return fetch(server.host + '/institution/create/', {
+        export async function getObservedInstitution(jwt: string) {
+            return fetch(server.host + '/observedinstitution/get/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': jwt,
                 },
-                body: JSON.stringify(institution)
+            })
+            .then(response => response.json() as Promise<any>)
+            .then(institution => {
+                return institution as unknown as ObservedInstitution[];
+            });
+        };
+
+        export async function createObservedInstitution(jwt: string, observedInstitution: ObservedInstitution) {
+            return fetch(server.host + '/observedinstitution/create/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+                body: JSON.stringify(observedInstitution)
             });
         };
         
@@ -98,6 +146,20 @@ export namespace API {
             });
         };
         
+        export async function detaineeGetByInstitution(jwt: string, institutionId: string): Promise<Detainee[]> {
+            return fetch(server.host + `/detainee/getbyinstitution/${ institutionId }`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': jwt,
+                },
+            })
+            .then(response => response.json() as Promise<any>)
+            .then(institution => {
+                return institution as unknown as Detainee[];
+            });
+        };
+
         export async function detaineeCreate(jwt: string, detainee: Detainee) {
             return fetch(server.host + '/detainee/create/', {
                 method: 'POST',

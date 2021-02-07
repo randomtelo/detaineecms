@@ -15,12 +15,8 @@ export const token = createStore(initJwtToken as string | null);
 export const userCredentialsChange  = createEvent<User | null>();
 export const tokenStoreChange  = createEvent<string | null>();
 
-userCredential.on(userCredentialsChange, (_a, user) => {
-    console.log('_a:', _a);
-    console.log('user:', user);
-    return user;
-});
-token.on(tokenStoreChange, (_, id) => id);
+userCredential.on(userCredentialsChange, (_a, user) => user);
+token.on(tokenStoreChange, (_, jwt) => jwt ? jwt.replace('JWT','Bearer') : null);
 
 userCredential.watch(value => {
     console.log('userCredential: ', value)

@@ -7,6 +7,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 const connect = require('./api/database/config');
+
 const salt: string = process.env.SALT as unknown as string;
 const port = process.env.PORT;
 const mongo = process.env.MONGO;

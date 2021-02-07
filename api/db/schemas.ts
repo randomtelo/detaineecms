@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-
+/*
+    Схема ОКРУГ
+*/
 const сountySchema = new Schema({
     title: String,
 });
 
 /*
+    Схема ОВД
     Местонахождение (ОВД/ИВС/СП/СИЗО…)
     *Короткое название - текст
     *Официальное название - текст
@@ -32,6 +35,15 @@ const institutionSchema = new Schema({
 });
 
 /*
+    Схема Отлеживаемое ОВД
+*/
+const ObservedInstitutionSchema = new Schema({
+    observerUser: { type: Schema.Types.ObjectId, ref: 'Admin' },
+    сounty: { type: Schema.Types.ObjectId, ref: 'County' },
+    observedInstitution: { type: Schema.Types.ObjectId, ref: 'Institution' }, // ОВД
+});
+
+/*
 *Округ - список из базы
 Местонахождение - список из таблицы ОВД/ИВС/СП/СИЗО…
 *ФИО - Текст
@@ -50,16 +62,15 @@ const institutionSchema = new Schema({
 Статья - текст
 */
 const detaineeSchema = new Schema({
-    сounty: { type: Schema.Types.ObjectId, ref: 'County' },
-    institution: { type: Schema.Types.ObjectId, ref: 'Institution' },
+    observedInstitution: { type: Schema.Types.ObjectId, ref: 'Institution' },
     fio: String,
     dateDetention: String,
     personsNearby: String,
     contact: String,
     specific: String, //Особые пожелания
-    comment: String, //Комментарий
-    courier: String, //Кто везёт передачу
-    article: String, //Статья
+    comment: String, // Комментарий
+    courier: String, // Кто везёт передачу
+    article: String, // Статья
 });
 
 const adminsSchema = new Schema({
@@ -73,12 +84,14 @@ detaineeSchema
 
 let CountyModel = mongoose.model('County', сountySchema);
 let InstitutionModel = mongoose.model('Institution', institutionSchema);
+let ObservedInstitutionModel =  mongoose.model('observedinstitution', ObservedInstitutionSchema);
 let DetaineeModel = mongoose.model('Detainee', detaineeSchema);
 let AdminModel = mongoose.model('Admin', adminsSchema);
 
 export {
     CountyModel,
     InstitutionModel,
+    ObservedInstitutionModel,
     DetaineeModel,
     AdminModel,
 };

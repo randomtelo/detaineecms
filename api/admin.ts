@@ -13,10 +13,18 @@ const jwtsecret = salt; // signing key for JWT
 const LocalStrategy = passportLocal.Strategy;
 const router = new Router();
 
-
 router.get('*', function(ctx) {
   ctx.body = fs.readFileSync(path.resolve(path.join('public', 'index.html')), 'utf8')
 });
+
+const cookieExtractor = (req) => {
+  var token = null;
+  if (req && req.cookies)
+  {
+      token = req.cookies['jwt'];
+  }
+  return token;
+};
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -26,6 +34,8 @@ const jwtOptions = {
 passport.use(new Strategy(jwtOptions, function (payload, done) {
   console.log(payload.id);
   AdminModel.findById(payload.id, (err, user) => {
+    console.log('err', err);
+    console.log('err', user);
     if (err) {
       return done(err)
     }
@@ -58,7 +68,7 @@ function (username, password, done) {
 
 
 // local auth route. Creates JWT is successful
-router.post('/login', async(ctx, next) => {
+router.post('/login', async (ctx, next) => {
   console.log(ctx.request.body);
   await passport.authenticate('local', function (err, user) {
     if (user == false) {
@@ -77,10 +87,14 @@ router.post('/login', async(ctx, next) => {
   })(ctx, next);
 });
 
+router.post('/logout', async (ctx: any) => {
+  ctx.logout();
+  ctx.redirect('/');
+});
 
 router.post('/profile', passport.authenticate('jwt', { session: false }), async ctx =>
   {
-    ctx.body = ctx.request.body;
+    ctx.body = JSON.stringify(ctx.request);
   }
 );
 

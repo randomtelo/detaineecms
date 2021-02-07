@@ -2,6 +2,7 @@ import React from 'react';
 
 import Controllers from '../../controllers';
 import Institution from '../../models/institution';
+import ObservedInstitution from '../../models/observedInstitution';
 import { UserCredentials } from '../../models/user';
 
 import NewInstitution from './newInstitution';
@@ -12,7 +13,7 @@ interface Props {
 }
 
 interface State {
-    institutions: Institution[];
+    institution?: Institution[];
     scrollCount: number;
     institutionModal: boolean;
 }
@@ -21,7 +22,7 @@ class InstitutionComponent extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            institutions: [],
+            institution: undefined,
             scrollCount: 0,
             institutionModal: false,
         }
@@ -37,6 +38,7 @@ class InstitutionComponent extends React.Component<Props, State> {
         return (
             <>
                 <NewInstitution
+                    userCredentials={ this.props.userCredentials }
                     institutionModal={ this.state.institutionModal }
                     handleNewInstitution={ this.handleNewInstitution }
                     createInstitution={ this.createInstitution }
@@ -53,12 +55,15 @@ class InstitutionComponent extends React.Component<Props, State> {
                                     <button className="btn btn-dark mr-1" type="button" onClick={() => alert('refresh in dev') }>Refresh</button>
                                 </div>
                             </div>
-                            <MapInstitution
-                                userCredentials={ this.props.userCredentials }
-                                institutions={ this.state.institutions }
-                                updateInstitution={ this.updateInstitution }
-                                deleteInstitution={ this.deleteInstitution }
-                            />
+                            { this.state.institution ? (
+                                <MapInstitution
+                                    userCredentials={ this.props.userCredentials }
+                                    institution={ this.state.institution }
+                                    updateInstitution={ this.updateInstitution }
+                                    deleteInstitution={ this.deleteInstitution }
+                                />
+                            ) : null }
+                            
                         </div>
                     </div>
                 </div>
@@ -67,14 +72,14 @@ class InstitutionComponent extends React.Component<Props, State> {
     }
 
     getInstitutions = () => {
-        if (this.props.userCredentials.jwt) {
-            Controllers.institutionController.getInstitutions(this.props.userCredentials.jwt)
-        }
+        Controllers.institutionController.getObservedInstitution()?.then(institution => {
+            if (institution) this.setState({ institution });
+        })
     }
 
     createInstitution = (institution: Institution) => {
         if (this.props.userCredentials.jwt) {
-            Controllers.institutionController.createInstitution(this.props.userCredentials.jwt, institution)
+            //Controllers.institutionController.createInstitution(this.props.userCredentials.jwt, institution)
         }
     }
 

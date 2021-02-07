@@ -20,7 +20,7 @@ function validAuth(username: string, password: string) {
     API.Autorization.Login(username, password)
     .then((response) => {
         if (response.token) {
-            console.log('response.token: ', response.token);
+            //console.log('response.token: ', response.token);
             Store.userCredentials.setToken(response.token);
         }
     })

@@ -9,7 +9,7 @@ import UpdateInstitution from './updateInstitution';
 
 interface Props {
     userCredentials: UserCredentials;
-    institutions: Institution[];
+    institution: Institution[];
     updateInstitution: (institutionId: string, institution: Institution) => void;
     deleteInstitution: (institutionId: string) => void;
 }
@@ -18,13 +18,13 @@ function MapInstitutionComponent(props: Props) {
     const [ selectNewDetainee, setSelectNewDetainee ] = useState<number | undefined>(undefined);
     const [ selectUpdateInstution, setSelectUpdateInstution ] = useState<number | undefined>(undefined);
 
-    const handleChangeDetainee = (select: number | undefined) => setSelectNewDetainee(select);
+    const handleNewDetainee = (select: number | undefined) => setSelectNewDetainee(select);
     const handleUpdateInstution = (select: number | undefined) => setSelectUpdateInstution(select);
 
     return (
         <React.Fragment>
         <div className="list-group">
-            {props.institutions.map((institution, index) => (
+            { props.institution.map((institution, index) => (
                 <div className="list-group-item" key={ index }>
                     <div className="row">
                         <div className="col-12">
@@ -32,13 +32,12 @@ function MapInstitutionComponent(props: Props) {
                                 <div className="col-8">
                                     <div className="row">
                                         <div className="col-12 mb-2">
-                                            <p><small>{ institution.id }</small></p>
-                                            <p><small>{ institution.address }</small></p>
-                                            <p>{ institution.titleShort }</p>
                                             <p>
-                                                <span className="badge badge-pill badge-info mr-2 mb-1 pb-1">District: { institution.district }</span>
-                                                <span className="badge badge-pill badge-info mr-2 mb-1 pb-1">County: { institution.сounty }</span>
+                                                <span className="badge badge-pill badge-info status mr-2 mb-1 pb-1">Округ: { institution.сounty.title }</span>
+                                                <span className="badge badge-pill badge-info mr-2 mb-1 pb-1">Район: { institution.district }</span>
                                             </p>
+                                            <h4>{ institution.titleShort }</h4>
+                                            <p><small>{ institution.address }</small></p>
                                         </div>
                                     </div>
                                 </div>
@@ -52,16 +51,7 @@ function MapInstitutionComponent(props: Props) {
                                     </button>
                                     <button
                                         className="btn btn-dark btn-m-pointer"
-                                        onClick={ () => { setSelectUpdateInstution(index) }}
-                                        data-toggle="tooltip"
-                                        data-placement="bottom"
-                                        title="Изменить данные"
-                                    >
-                                        <i className="far fa-edit"></i>
-                                    </button>
-                                    <button
-                                        className="btn btn-dark btn-m-pointer"
-                                        onClick={ () => { props.deleteInstitution(institution.id) }}
+                                        onClick={ () => { props.deleteInstitution(institution._id) }}
                                         data-toggle="tooltip"
                                         data-placement="bottom"
                                         title="Убрать из отслеживания"
@@ -73,29 +63,29 @@ function MapInstitutionComponent(props: Props) {
                                     <UpdateInstitution
                                         index={ index }
                                         userCredentials={ props.userCredentials}
-                                        instutionId={ institution.id }
+                                        instutionId={ institution._id }
                                         view={ index === selectUpdateInstution ? true : false }
                                         handleUpdateInstution={ handleUpdateInstution }
                                     />
                                     <NewDetainee
                                         index={ index }
                                         view={index === selectNewDetainee ? true : false}
-                                        instutionId={ institution.id }
-                                        handleChangeDetainee={ handleChangeDetainee }
+                                        instutionId={ institution._id }
+                                        handleNewDetainee={ handleNewDetainee }
                                     />
                                 </div>
                                 <div className="col-12">
                                     <Detainee
                                         index={ index }
                                         userCredentials={ props.userCredentials }
-                                        instutionId={ institution.id }
+                                        instutionId={ institution._id }
                                     />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            ))}
+            )) }
         </div>
         </React.Fragment>
     );
